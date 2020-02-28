@@ -75,7 +75,7 @@ functions:
     events:
       - http:
           path: html2pdf
-          method: get
+          method: post
   hello:
     handler: handler.hello
     events:
