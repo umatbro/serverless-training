@@ -62,16 +62,17 @@ package:
     - env/**
     - dependencies/**
 
-layers:
-  weasyprint:
-    package:
-      artifact: ../weasyprint-py37.zip
+# layers:
+#   weasyprint:
+#     package:
+#       artifact: ../weasyprint-py37.zip
 
 functions:
   html2pdf:
     handler: html2pdf.main
     layers:
-      - { Ref: WeasyprintLambdaLayer }
+      # - { Ref: WeasyprintLambdaLayer }
+      - ${cf:weasyprint-layer-dev.WeasyprintLayerExport}
     events:
       - http:
           path: html2pdf

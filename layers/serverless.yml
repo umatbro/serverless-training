@@ -1,0 +1,21 @@
+service: weasyprint-layer
+# app and org for use with dashboard.serverless.com
+app: srvrless-training
+org: umatbro
+
+provider:
+  name: aws
+  region: eu-central-1
+
+layers:
+  weasyprint:
+    package:
+      artifact: weasyprint-py37.zip
+
+resources:
+  Outputs:
+    WeasyprintLayerExport:
+        Value:
+          Ref: WeasyprintLambdaLayer
+        Export:
+          Name: WeasyprintLambdaLayer

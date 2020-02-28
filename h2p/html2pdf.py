@@ -25,6 +25,8 @@ def error_response(body):
     return {
         'statusCode': 400,
         'body': body,
+        'headers': { 'Content-Type': 'application/json' },
+        'isBase64Encoded': False,
     }
 
 
