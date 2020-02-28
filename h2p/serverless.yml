@@ -22,7 +22,13 @@ org: umatbro
 
 provider:
   name: aws
-  runtime: python3.8
+  region: eu-central-1
+  runtime: python3.7
+  environment:
+    PYTHONPATH: /opt/lib
+  apiGateway:
+    binaryMediaTypes:
+      - '*/*'
 
 # you can overwrite defaults here
 #  stage: dev
@@ -50,25 +56,28 @@ provider:
 
 # you can add packaging information here
 package:
-#  include:
-#    - include-me.py
-#    - include-me-dir/**
- exclude:
-   - node_modules/
+  include: []
+  exclude:
+    - node_modules/**
+    - env/**
+    - dependencies/**
 
-
-plugins:
-  - serverless-python-requirements
-custom:
-  pythonRequirements:
-    dockerizePip: non-linux
+layers:
+  weasyprint:
+    package:
+      artifact: ../weasyprint-py37.zip
 
 functions:
+  html2pdf:
+    handler: html2pdf.main
+    layers:
+      - { Ref: WeasyprintLambdaLayer }
+    events:
+      - http:
+          path: html2pdf
+          method: get
   hello:
     handler: handler.hello
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
     events:
       - http:
           path: hello

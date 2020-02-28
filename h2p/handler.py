@@ -1,12 +1,13 @@
 import json
-import pandas as pd
+# import pandas as pd
 
 def hello(event, context):
-    df = pd.DataFrame({'a': [1, 2, 3], 'b':[2,3,4]})
+    # df = pd.DataFrame({'a': [1, 2, 3], 'b':[2,3,4]})
+    df = {'hej':2}
     body = {
         "message": "Go Serverless v1.0! Your function executed successfully!",
         # "input": event
-        'df': df.to_dict(),
+        'df': df,
     }
 
     response = {
