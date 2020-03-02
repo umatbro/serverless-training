@@ -10,3 +10,12 @@ def get_url_from_lambda_event(event) -> str:
         body = base64.b64decode(body)
     body = json.loads(body)
     return body.get('url', None)
+
+
+def error_response(body):
+    return {
+        'statusCode': 400,
+        'body': body,
+        'headers': { 'Content-Type': 'application/json' },
+        'isBase64Encoded': False,
+    }

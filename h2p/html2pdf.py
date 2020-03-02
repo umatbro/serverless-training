@@ -2,7 +2,7 @@ from weasyprint import HTML
 import json
 import base64
 
-from utils import get_url_from_lambda_event
+from utils import get_url_from_lambda_event, error_response
 
 def html_to_pdf(html):
     generator = HTML(string=html)
@@ -21,14 +21,6 @@ def response_file(content):
         'statusCode'        : 200,
         'headers'           : { 'Content-Type': 'application/pdf' },
         'body'              : content
-    }
-
-def error_response(body):
-    return {
-        'statusCode': 400,
-        'body': body,
-        'headers': { 'Content-Type': 'application/json' },
-        'isBase64Encoded': False,
     }
 
 

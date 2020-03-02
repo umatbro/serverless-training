@@ -73,10 +73,26 @@ functions:
     layers:
       # - { Ref: WeasyprintLambdaLayer }
       - ${cf:weasyprint-layer-dev.WeasyprintLayerExport}
+    apiGateway:
+      binaryMediaTypes:
+        - '*/*'
     events:
       - http:
           path: html2pdf
           method: post
+  url2bucket:
+    handler: html2s3.main
+    layers:
+      - ${cf:weasyprint-layer-dev.WeasyprintLayerExport}
+    events:
+      - http:
+          path: url2bucket
+          method: post
+    environment:
+      BUCKET_NAME: pdf-keeper
+      BUCKET_URL: 'https://pdf-keeper.s3.eu-central-1.amazonaws.com/'
+      ACCESS_KEY: ${param:ACCESS_KEY}
+      SECRET_KEY: ${param:SECRET_KEY}
   hello:
     handler: handler.hello
     events:
