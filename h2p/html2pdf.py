@@ -2,6 +2,8 @@ from weasyprint import HTML
 import json
 import base64
 
+from utils import get_url_from_lambda_event
+
 def html_to_pdf(html):
     generator = HTML(string=html)
     pdf = generator.write_pdf()
@@ -32,22 +34,13 @@ def error_response(body):
 
 def main(event, context):
     print(event)
-    # body = json.loads(event['body']) or {}
-    # html = body.get('html', None)
-    body = event.get('body', None)
-    if body:
-        decoded_body = base64.b64decode(body)
-        body = json.loads(decoded_body)
-    else:
-        return error_response({
-            'url': 'This field is required',
-        })
-    address = body.get('url', '')
-    if not address:
+    url = get_url_from_lambda_event(event)
+    if not url:
         return error_response({
             'url': 'This field is required'
         })
-    pdf = webpage_to_pdf(address)
+    pdf = webpage_to_pdf(url)
+    
     # convert bytes to base64
     encoded = base64.b64encode(pdf)
     encoded = encoded.decode('utf-8')
