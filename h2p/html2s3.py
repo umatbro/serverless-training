@@ -8,11 +8,10 @@ import weasyprint
 from utils import get_url_from_lambda_event, error_response
 
 def main(event, context):
+    print(event)
     url = get_url_from_lambda_event(event)
     if not url:
-        return error_response({
-            'url': 'This field is required',
-        })
+        raise ValueError('Url not found')
 
     html = weasyprint.HTML(url)
     pdf = html.write_pdf()
