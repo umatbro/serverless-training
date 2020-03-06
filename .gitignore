@@ -16,6 +16,7 @@ var/
 .installed.cfg
 *.egg
 __pycache__/
+.env/
 
 # Serverless directories
 .serverless
@@ -24,3 +25,5 @@ node_modules/
 
 # other
 .DS_Store
+.vscode/
+.idea/
